@@ -30,7 +30,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, dc, application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted for application: {dc} - {application}");
             }
             var jobDefs = _jobDefsService.GetJobDefsByApplication(dc, application);
             return Ok(jobDefs);

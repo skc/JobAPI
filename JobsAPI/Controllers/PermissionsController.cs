@@ -30,7 +30,7 @@ namespace JobsAPI.Controllers
             }
             if (!_permissionsService.MayGrant(permission, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to grant permission for application: {permission.App.Dc} - {permission.App.Application}");
             }
             _permissionsService.AddPermission(permission, user);
             return Ok();
@@ -47,7 +47,7 @@ namespace JobsAPI.Controllers
             }
             if (!_permissionsService.MayGrant(_permission, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to delete permission for application: {_permission.Dc} - {_permission.Application}");
             }
             _permissionsService.DeletePermission(_permission);
             return Ok();
@@ -68,7 +68,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, dc, application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted for application: {perm.App.Dc} - {perm.App.Application}");
             }
             var permissions = _permissionsService.GetApplicationPermissions(perm.App);
             return Ok(permissions);

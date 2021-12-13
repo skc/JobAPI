@@ -9,6 +9,7 @@ namespace JobsAPI.Data.Models
     {
         public int InfoNoteId { get; set; }
         public string Text { get; set; }
+        public bool RtL { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int AttachmentId { get; set; }
