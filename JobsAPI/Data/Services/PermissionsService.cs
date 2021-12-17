@@ -17,15 +17,19 @@ namespace JobsAPI.Data.Services
         }
 
         public Permission GetPermission(PermissionVM perm) =>
-            _context.Permissions.FirstOrDefault(p => 
+            _context.Permissions.FirstOrDefault(p =>
             p.User == perm.User && p.Dc == perm.App.Dc && p.Application == perm.App.Application);
 
         public Permission GetPermissionById(int id) =>
             _context.Permissions.FirstOrDefault(p => p.PermissionId == id);
+
         public bool IsAdministrator(string user, IConfiguration configuration) =>
             configuration.GetSection("JobsSettings:AdminUsers").Get<List<string>>().Contains(user);
+
         public bool IsOperator(string user, IConfiguration configuration) =>
+            configuration.GetSection("JobsSettings:AdminUsers").Get<List<string>>().Contains(user) ||
             configuration.GetSection("JobsSettings:OperatorsUsers").Get<List<string>>().Contains(user);
+
         public bool IsPermittedForApplication(PermissionVM perm, IConfiguration configuration)
         {
             if (IsAdministrator(perm.User, configuration))
@@ -68,13 +72,13 @@ namespace JobsAPI.Data.Services
             _context.SaveChanges();
         }
 
-        public List<Permission> GetApplicationPermissions(ApplicationVM app) => 
+        public List<Permission> GetApplicationPermissions(ApplicationVM app) =>
             _context.Permissions.Where(p => p.Dc == app.Dc && p.Application == app.Application).ToList();
 
         public List<ApplicationVM> GetPermittedApplications(string user) =>
             _context.Permissions
                 .Where(p => p.User == user)
-                .Select(p => new ApplicationVM() {Dc = p.Dc, Application = p.Application })
+                .Select(p => new ApplicationVM() { Dc = p.Dc, Application = p.Application })
                 .ToList();
     }
 }

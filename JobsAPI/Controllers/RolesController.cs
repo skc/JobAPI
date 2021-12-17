@@ -32,7 +32,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, role.Dc, role.Application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to for application: {perm.App.Dc} - {perm.App.Application}");
             }
             _rolesService.AddRole(role, user);
             return Ok();
@@ -44,7 +44,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, dc, application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to for application: {perm.App.Dc} - {perm.App.Application}");
             }
             var roles = _rolesService.GetRolesByApplication(perm.App);
             return Ok(roles);
@@ -59,7 +59,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, role.Dc, role.Application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to for application: {perm.App.Dc} - {perm.App.Application}");
             }
             _rolesService.UpdateRoleProgrammers(role, roleProgrammers);
             return Ok();
@@ -74,7 +74,7 @@ namespace JobsAPI.Controllers
             var perm = new PermissionVM(user, role.Dc, role.Application);
             if (!_permissionsService.IsPermittedForApplication(perm, _configuration))
             {
-                return Forbid();
+                return StatusCode(403, $"User not premitted to for application: {perm.App.Dc} - {perm.App.Application}");
             }
             _rolesService.DeleteRole(role);
             return Ok();

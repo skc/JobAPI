@@ -8,7 +8,7 @@ namespace JobsAPI.Data.ViewModel
     public class JobVM
     {
         public string Dc { get; set; }
-        public string Apllication { get; set; }
+        public string Application { get; set; }
         public string Group { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
