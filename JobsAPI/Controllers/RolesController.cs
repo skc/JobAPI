@@ -37,6 +37,7 @@ namespace JobsAPI.Controllers
             _rolesService.AddRole(role, user);
             return Ok();
         }
+
         [HttpGet("get-roles-by-application/{dc}/{application}")]
         public IActionResult GetRolesByApplication(string dc, string application)
         {
@@ -49,6 +50,7 @@ namespace JobsAPI.Controllers
             var roles = _rolesService.GetRolesByApplication(perm.App);
             return Ok(roles);
         }
+
         [HttpPut("update-role-programmers")]
         public IActionResult UpdateRoleProgrammers([FromBody] RoleProgrammersVM roleProgrammers)
         {
@@ -64,6 +66,7 @@ namespace JobsAPI.Controllers
             _rolesService.UpdateRoleProgrammers(role, roleProgrammers);
             return Ok();
         }
+
         [HttpDelete("delete-rule-by-id/{id}")]
         public IActionResult DeleteRoleById(int id)
         {

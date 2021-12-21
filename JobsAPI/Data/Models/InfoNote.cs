@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace JobsAPI.Data.Models
@@ -17,6 +18,7 @@ namespace JobsAPI.Data.Models
         public virtual Attachment Attachment { get; set; }
        
         public int JobId { get; set; }
+        [JsonIgnore]
         public Job Job { get; set; }
 
     }

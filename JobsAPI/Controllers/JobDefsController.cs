@@ -14,12 +14,14 @@ namespace JobsAPI.Controllers
     {
         private JobDefsService _jobDefsService;
         private PermissionsService _permissionsService;
+        private JobsService _jobsService;
         private IConfiguration _configuration;
 
-        public JobDefsController(JobDefsService jobDefsService, PermissionsService permissionsService, IConfiguration cofiguration)
+        public JobDefsController(JobDefsService jobDefsService, PermissionsService permissionsService, JobsService jobsService, IConfiguration cofiguration)
         {
             _configuration = cofiguration;
             _jobDefsService = jobDefsService;
+            _jobsService = jobsService;
             _permissionsService = permissionsService;
         }
 
@@ -33,7 +35,7 @@ namespace JobsAPI.Controllers
                 return StatusCode(403, $"User not premitted for application: {dc} - {application}");
             }
             var jobDefs = _jobDefsService.GetJobDefsByApplication(dc, application);
-            return Ok(jobDefs);
+            return Ok(_jobsService.GetJobIds(jobDefs));
         }
     }
 }
